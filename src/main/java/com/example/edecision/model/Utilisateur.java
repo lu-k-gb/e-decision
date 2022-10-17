@@ -1,4 +1,4 @@
-package Model;
+package com.example.edecision.model;
 
 public class Utilisateur {
 	private int id;
