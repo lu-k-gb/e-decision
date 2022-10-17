@@ -1,9 +1,21 @@
 package com.example.edecision.model;
 
-public class Utilisateur {
+import java.io.Serializable;
+
+public class Utilisateur implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String password;
+	
+	public Utilisateur(String name, String password) {
+		this.setName(name);
+		this.setPassword(password);
+	}
+
 	
 	public int getId() {
 		return id;
