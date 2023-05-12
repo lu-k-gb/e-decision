@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity (name = "Utilisateurs")
-@Table (name = "utilisateurs")
-public class Utilisateur implements Serializable {
+@Entity (name = "Authentifications")
+@Table (name = "authentifications")
+public class Authentification implements Serializable {
 	/**
 	 * 
 	 */

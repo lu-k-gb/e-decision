@@ -9,18 +9,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.edecision.model.Utilisateur;
-import com.example.edecision.model.UtilisateurRepository;
+import com.example.edecision.model.Authentification;
+import com.example.edecision.model.AuthentificationRepository;
+
 
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UtilisateurRepository repo;
+	private AuthentificationRepository repo;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		 Utilisateur user = repo.getUserByName(username);
+		 Authentification user = repo.getUserByName(username);
 		 if (user != null)
 		 {
 		 return new User(user.getName(), user.getPassword(), new ArrayList<>());
@@ -32,4 +33,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
 	}
+	
+	//Création d'une Authentification
+			public String createAuthentification(Authentification uneAuthentification)
+			{
+				return this.repo.createAuthentification(uneAuthentification);
+			}
 }

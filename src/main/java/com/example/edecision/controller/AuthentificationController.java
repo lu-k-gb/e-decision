@@ -1,5 +1,7 @@
 package com.example.edecision.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,13 +10,14 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.edecision.config.JwtTokenUtil;
 import com.example.edecision.model.JwtResponse;
-import com.example.edecision.model.Utilisateur;
+import com.example.edecision.model.Authentification;
 import com.example.edecision.service.JwtUserDetailsService;
 
 
@@ -32,7 +35,7 @@ public class AuthentificationController {
 	private JwtUserDetailsService userDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody Utilisateur authenticationRequest) throws Exception {
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody Authentification authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getName(), authenticationRequest.getPassword());
 
@@ -43,6 +46,17 @@ public class AuthentificationController {
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
+	
+	//Création d'un compte authentification
+			@PostMapping("register")
+			public String ajoutAuthentification(@RequestBody Authentification uneAuthentification)
+			{
+				String result;
+				result = userDetailsService.createAuthentification(uneAuthentification);
+				
+				
+				return result;
+			}
 
 	private void authenticate(String username, String password) throws Exception {
 		try {
