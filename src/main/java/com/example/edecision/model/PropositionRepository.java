@@ -12,17 +12,17 @@ import org.springframework.web.client.RestTemplate;
 
 @Transactional
 @Repository
-public class UtilisateurRepository {
+public class PropositionRepository {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Object> listUtilisateurs()
+	public List<Object> listPropositions()
 	{
-		String uri = "http://127.0.0.1:8085/utilisateurs";
+		String uri = "http://127.0.0.1:8082/propositions";
 		RestTemplate restTemplate = new RestTemplate();
-		Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
-		return Arrays.asList(lesUtilisateurs);
+		Object[] lesPropositions = restTemplate.getForObject(uri, Object[].class);
+		return Arrays.asList(lesPropositions);
 		
 	}
 
