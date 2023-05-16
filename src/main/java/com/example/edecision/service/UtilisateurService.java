@@ -18,5 +18,10 @@ public class UtilisateurService {
 		List<Object> lesUtilisateurs = this.UtilisateurRepo.listUtilisateurs();
 		return lesUtilisateurs;
 	}
+	
+//	public String ajoutUtilisateur(Object unUtilisateur) {
+//		String reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
+//		return reponse;
+//	}
 
 }

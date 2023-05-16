@@ -25,5 +25,14 @@ public class UtilisateurRepository {
 		return Arrays.asList(lesUtilisateurs);
 		
 	}
+	
+//	public String ajoutUtilisateur()
+//	{
+//		String uri = "http://127.0.0.1:8085/utilisateurs";
+//		RestTemplate restTemplate = new RestTemplate();
+//		Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
+//		return Arrays.asList(lesUtilisateurs);
+//		
+//	}
 
 }
