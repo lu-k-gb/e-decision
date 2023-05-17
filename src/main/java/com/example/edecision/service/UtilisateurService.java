@@ -24,5 +24,10 @@ public class UtilisateurService {
 		String reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
 		return reponse;
 	}
+	
+	public String deleteUtilisateur(int id) {
+		String reponse = this.UtilisateurRepo.deleteUtilisateur(id);
+		return reponse;
+	}
 
 }

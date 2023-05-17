@@ -37,5 +37,17 @@ public class UtilisateurRepository {
 		return resultat.getBody().toString();
 		
 	}
+	
+	public String deleteUtilisateur(int id)
+	{
+		String uri = "http://127.0.0.1:8085/utilisateur/";
+		RestTemplate restTemplate = new RestTemplate();
+	//ResponseEntity<String> resultat = restTemplate
+	 restTemplate
+	.delete(uri + id);
+//		Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
+		return "Suppression ok";
+		
+	}
 
 }

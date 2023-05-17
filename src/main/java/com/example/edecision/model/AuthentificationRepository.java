@@ -50,12 +50,14 @@ public class AuthentificationRepository {
 		public ResponseEntity<String> createAuthentification(Authentification uneAuthentification)
 		{
 			int dernierId = 0;
+			//On cherche premièrement que l'id de l'objet n'existe pas deja
 			Authentification entity = em.find(Authentification.class, uneAuthentification.getId());
 			if (entity != null) {
 				return new ResponseEntity<>("Authentification deja existante", HttpStatus.UNAUTHORIZED);
 				//return "Authentification deja existante";
 			}
 			else {
+				//On vérifie ensuite que le login n'est pas deja utilisé
 				 entity = getUserByName(uneAuthentification.getName());
 				
 			 if (entity != null)
@@ -65,12 +67,14 @@ public class AuthentificationRepository {
 			 }
 			 else
 			 {
+				 //On crypte le mot de passe de tel sorte qu'il soit decryptable par l'authentification
 				setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
 					String newPassword = this.passwordEncoder.encode(uneAuthentification.getPassword());
 					uneAuthentification.setPassword(newPassword.substring(8));
 
 
 					em.persist(uneAuthentification);
+					//On recupère ensuite l'id de l'enregistrement authentification que l'on vient de créer
 					entity = getUserByName(uneAuthentification.getName());
 					
 					 if (entity != null)
@@ -79,6 +83,7 @@ public class AuthentificationRepository {
 					 }
 					 else
 					 {
+						 //Si on ne le retrouve pas => erreur
 						 return new ResponseEntity<>("La création a échoué", HttpStatus.UNAUTHORIZED);
 					 }
 
@@ -88,6 +93,18 @@ public class AuthentificationRepository {
 		    }
 			}
 			
+		}
+		
+		//Suppression d'une authentification
+		public ResponseEntity<String> deleteAuthentification(int numero) {
+			Authentification entity = em.find(Authentification.class, numero);
+			if (entity == null) {
+				return new ResponseEntity<>("Numéro inconnu, veuillez réessayez"  , HttpStatus.NOT_FOUND);
+				//return "Numéro inconnu, veuillez réessayez";
+			}
+			em.remove(entity);
+			return new ResponseEntity<>("Suppression de l'authentification réalisée " + entity.getId() , HttpStatus.OK);
+			//return "Suppression réalisée";
 		}
 	        
 		
