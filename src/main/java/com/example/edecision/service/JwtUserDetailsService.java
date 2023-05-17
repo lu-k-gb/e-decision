@@ -3,6 +3,7 @@ package com.example.edecision.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +36,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 	
 	//Création d'une Authentification
-			public String createAuthentification(Authentification uneAuthentification)
+			public ResponseEntity<String> createAuthentification(Authentification uneAuthentification)
 			{
 				return this.repo.createAuthentification(uneAuthentification);
 			}
