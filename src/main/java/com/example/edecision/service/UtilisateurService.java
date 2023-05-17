@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.edecision.model.Utilisateur;
 import com.example.edecision.model.UtilisateurRepository;
 import com.example.edecision.model.VoteRepository;
 
@@ -19,9 +20,9 @@ public class UtilisateurService {
 		return lesUtilisateurs;
 	}
 	
-//	public String ajoutUtilisateur(Object unUtilisateur) {
-//		String reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
-//		return reponse;
-//	}
+	public String ajoutUtilisateur(Utilisateur unUtilisateur) {
+		String reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
+		return reponse;
+	}
 
 }

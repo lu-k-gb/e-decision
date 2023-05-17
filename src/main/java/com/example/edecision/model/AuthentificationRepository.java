@@ -49,7 +49,7 @@ public class AuthentificationRepository {
 	//Création d'une Authentification
 		public ResponseEntity<String> createAuthentification(Authentification uneAuthentification)
 		{
-			
+			int dernierId = 0;
 			Authentification entity = em.find(Authentification.class, uneAuthentification.getId());
 			if (entity != null) {
 				return new ResponseEntity<>("Authentification deja existante", HttpStatus.UNAUTHORIZED);
@@ -71,8 +71,18 @@ public class AuthentificationRepository {
 
 
 					em.persist(uneAuthentification);
+					entity = getUserByName(uneAuthentification.getName());
+					
+					 if (entity != null)
+					 {
+						 dernierId = entity.getId();
+					 }
+					 else
+					 {
+						 return new ResponseEntity<>("La création a échoué", HttpStatus.UNAUTHORIZED);
+					 }
 
-					return new ResponseEntity<>("Ajout de l'authentification réalisée", HttpStatus.CREATED);
+					return new ResponseEntity<>("Ajout de l'authentification réalisée " + dernierId , HttpStatus.CREATED);
 					//return  "Ajout de l'authentification réalisée";
 
 		    }

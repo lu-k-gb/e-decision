@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.edecision.config.JwtTokenUtil;
 import com.example.edecision.model.JwtResponse;
+import com.example.edecision.model.Utilisateur;
+import com.example.edecision.model.AuthentUtilisateur;
 import com.example.edecision.model.Authentification;
 import com.example.edecision.service.JwtUserDetailsService;
 import com.example.edecision.service.UtilisateurService;
@@ -53,15 +55,23 @@ public class AuthentificationController {
 	
 	//Création d'un compte authentification
 			@PostMapping("register")
-			public ResponseEntity<String> ajoutAuthentification(@RequestBody Authentification uneAuthentification)
+			public ResponseEntity<String> ajoutAuthentification(@RequestBody AuthentUtilisateur unUtilisateurComplet)
 			{
 				ResponseEntity<String> result;
+				Authentification uneAuthentification = new Authentification();
+				uneAuthentification.setName(unUtilisateurComplet.getName());
+				uneAuthentification.setPassword(unUtilisateurComplet.getPassword());
+				Utilisateur unutilisateur = new Utilisateur();
+				unutilisateur.setNom(unUtilisateurComplet.getNom());
+				unutilisateur.setPrenom(unUtilisateurComplet.getPrenom());
+				unutilisateur.setAdresseMail(unUtilisateurComplet.getAdresseMail());
 				result = userDetailsService.createAuthentification(uneAuthentification);
 				
 				if (result.getStatusCode() == HttpStatus.CREATED)
 				{
-					String resultat = result.getBody();
-//					String test = utilisateursService.ajoutUtilisateur();
+					String resultat = result.getBody().substring(37);
+					unutilisateur.setIdAuthentification(Integer.parseInt(resultat));
+					String test = utilisateursService.ajoutUtilisateur(unutilisateur);
 				}
 				return result;
 			}
