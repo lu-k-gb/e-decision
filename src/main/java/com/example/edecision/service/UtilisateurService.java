@@ -29,5 +29,10 @@ public class UtilisateurService {
 		String reponse = this.UtilisateurRepo.deleteUtilisateur(id);
 		return reponse;
 	}
+	
+	public int getIdUtilisateurByNumeroAuthent(int idAuthent) {
+		int reponse = this.UtilisateurRepo.getIdUtilisateurByNumeroAuthent(idAuthent);
+		return reponse;
+	}
 
 }

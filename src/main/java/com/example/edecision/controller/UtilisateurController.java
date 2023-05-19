@@ -74,12 +74,18 @@ public class UtilisateurController {
 	public ResponseEntity<String> delete(@PathVariable("numero") int numero)
 	{
 		ResponseEntity<String> result;
+		//Appel de la suppression de l'authentification
 	    result = userDetailsService.deleteAuthentification(numero);
 	    if (result.getStatusCode() == HttpStatus.OK)
 		{
+	    	//Si authent supprimé alors on récupère l'id qui a été supprimé
 			String resultat = result.getBody().substring(43);
 			//unutilisateur.setIdAuthentification(Integer.parseInt(resultat));
-			String test = utilisateursService.deleteUtilisateur(Integer.parseInt(resultat));
+			//On appel la méthode du micro service utilisateur permettant de récupérant l'id utilisateur
+			//à partir de son id authentification
+			int idUtilisateur = utilisateursService.getIdUtilisateurByNumeroAuthent(Integer.parseInt(resultat));
+			//Une fois cet id récupéré on supprime l'utilisateur
+			String test = utilisateursService.deleteUtilisateur(idUtilisateur);
 		}
 		return result;
 	}
