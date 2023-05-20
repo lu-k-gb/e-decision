@@ -40,4 +40,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 			{
 				return this.repo.createAuthentification(uneAuthentification);
 			}
+			
+			//Suppression d'une Authentification
+			public ResponseEntity<String> deleteAuthentification(int id)
+			{
+				return this.repo.deleteAuthentification(id);
+			}
 }
