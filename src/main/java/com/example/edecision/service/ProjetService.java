@@ -17,5 +17,20 @@ public class ProjetService {
 		List<Object> lesProjets = this.projetRepo.listProjets();
 		return lesProjets;
 	}
+	
+	public String ajoutProjet(Projet unProjet) {
+		String reponse = this.projetRepo.ajoutProjet(unProjet);
+		return reponse;
+	}
+	
+	public String deleteProjet(int id) {
+		String reponse = this.projetRepo.deleteProjet(id);
+		return reponse;
+	}
+	
+	public String updateEtat(int id) {
+		String reponse = this.projetRepo.updateEtat(id);
+		return reponse;
+	}
 
 }
