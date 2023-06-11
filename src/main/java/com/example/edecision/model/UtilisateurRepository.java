@@ -61,5 +61,14 @@ public class UtilisateurRepository {
 		return idUtilisateur;
 		
 	}
+	
+	public Utilisateur getutilisateurById(int idUser)
+	{
+		String uri = "http://127.0.0.1:8085/utilisateur/";
+		RestTemplate restTemplate = new RestTemplate();
+	    Utilisateur unUtilisateur = restTemplate.getForObject(uri + idUser, Utilisateur.class);
+		return unUtilisateur;
+		
+	}
 
 }

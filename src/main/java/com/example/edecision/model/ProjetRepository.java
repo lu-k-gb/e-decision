@@ -55,5 +55,14 @@ public class ProjetRepository {
 		ResponseEntity<String> resultat = restTemplate.exchange(uri + id, HttpMethod.PATCH,new HttpEntity<String>(test ), String.class);
 		return "Modification ok " + resultat.getBody().substring(21);
 	}
+	
+	public Projet getProjetById(int idProjet)
+	{
+		String uri = "http://127.0.0.1:8081/projet/";
+		RestTemplate restTemplate = new RestTemplate();
+		Projet unProjet = restTemplate.getForObject(uri + idProjet, Projet.class);
+		return unProjet;
+		
+	}
 
 }
