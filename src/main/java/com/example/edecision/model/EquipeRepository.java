@@ -74,5 +74,20 @@ public class EquipeRepository {
 		return "Ajout des équipiers ok ";
 		
 	}
+	
+	public Equipe getEquipeById(int idEquipe)
+	{
+		String uri = "http://127.0.0.1:8083/equipe/";
+		RestTemplate restTemplate = new RestTemplateBuilder().interceptors((request, body, execution) -> {
+            System.out.print(request.getURI());
+            System.out.print(body);
+            ClientHttpResponse response = execution.execute(request, body);
+            System.out.print(response.getStatusCode());
+            return response;
+		}).build();
+		Equipe uneEquipe = restTemplate.getForObject(uri + idEquipe, Equipe.class);
+		return uneEquipe;
+		
+	}
 
 }

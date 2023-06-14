@@ -15,7 +15,7 @@ public class AuthentUtilisateur {
 	
 	private String adresse_mail;
 	
-	private int id_authentification;
+	//private int id_authentification;
 	
 	public String getNom() {
 		return nom;
@@ -35,12 +35,12 @@ public class AuthentUtilisateur {
 	public void setAdresseMail(String adresse_mail) {
 		this.adresse_mail = adresse_mail;
 	}
-	public int getIdAuthentification() {
-		return id_authentification;
-	}
-	public void setIdAuthentification(int id_authentification) {
-		this.id_authentification = id_authentification;
-	}
+//	public int getIdAuthentification() {
+//		return id_authentification;
+//	}
+//	public void setIdAuthentification(int id_authentification) {
+//		this.id_authentification = id_authentification;
+//	}
 	
 	public int getId() {
 		return id;
