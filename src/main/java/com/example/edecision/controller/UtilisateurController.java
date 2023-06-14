@@ -38,36 +38,7 @@ public class UtilisateurController {
 		return lesUtilisateurs;
 	}
 	
-	//Création d'un compte authentification
-	@PostMapping("register")
-	public ResponseEntity<String> ajoutAuthentification(@RequestBody AuthentUtilisateur unUtilisateurComplet)
-	{
-		ResponseEntity<String> result;
-		String test;
-		//On crée un objet authentification à partir de l'objet contenant tous les champs
-		Authentification uneAuthentification = new Authentification();
-		uneAuthentification.setName(unUtilisateurComplet.getName());
-		uneAuthentification.setPassword(unUtilisateurComplet.getPassword());
-		//On crée un objet utilisateur à partir de l'objet contenant tous les champs
-		Utilisateur unutilisateur = new Utilisateur();
-		unutilisateur.setNom(unUtilisateurComplet.getNom());
-		unutilisateur.setPrenom(unUtilisateurComplet.getPrenom());
-		unutilisateur.setAdresseMail(unUtilisateurComplet.getAdresseMail());
-		//On crée l'authentification
-		result = userDetailsService.createAuthentification(uneAuthentification);
-		
-		//Si la création de l'authentification est faite
-		if (result.getStatusCode() == HttpStatus.CREATED)
-		{
-			//On recupère le code de l'authenfication que l'on vient de créer
-			//(voir pour modifier le code pour rendre plus dynamique)
-			String resultat = result.getBody().substring(37);
-			unutilisateur.setIdAuthentification(Integer.parseInt(resultat));
-			//On lance la création d'un utilisateur
-			test = utilisateursService.ajoutUtilisateur(unutilisateur);
-		}
-		return result;
-	}
+	
 	
 	//Suppression d'un utilisateur + authentification
 	@DeleteMapping("user/delete/{numero}")
