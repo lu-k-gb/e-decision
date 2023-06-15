@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.edecision.model.EquipeRepository;
-import com.example.edecision.model.EquipeSimple;
 import com.example.edecision.model.ProjetRepository;
 import com.example.edecision.model.UtilisateurRepository;
+import com.example.edecision.model.Entity.Equipe;
+import com.example.edecision.model.Entity.EquipeSimple;
 
 @Service
 public class EquipeService {
@@ -20,8 +21,8 @@ public class EquipeService {
 	@Autowired
 	private ProjetRepository projetRepo;
 	
-	public List<Object> listEquipes() {
-		List<Object> lesEquipes = this.equipeRepo.listEquipes();
+	public List<Equipe> listEquipes() {
+		List<Equipe> lesEquipes = this.equipeRepo.listEquipes();
 		return lesEquipes;
 	}
 	
@@ -50,7 +51,7 @@ public class EquipeService {
 				return this.equipeRepo.delete(id);
 			}
 			
-			//Différentes méthodes pour modifier les attributs d'une equipe
+			//Ajout coéquipier
 			public String addEquipier(int id, List<Integer> lesCoequipiers) {
 				//Appel du microservice utilisateur afin de vérifier que les id de la liste existe tous
 				for (Integer unCoequipier : lesCoequipiers) {

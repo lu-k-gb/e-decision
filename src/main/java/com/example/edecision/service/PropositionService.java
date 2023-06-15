@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.edecision.model.EquipeRepository;
 import com.example.edecision.model.ProjetRepository;
-import com.example.edecision.model.Proposition;
-import com.example.edecision.model.PropositionComplex;
 import com.example.edecision.model.PropositionRepository;
-import com.example.edecision.model.PropositionSample;
 import com.example.edecision.model.UtilisateurRepository;
+import com.example.edecision.model.Entity.Proposition;
+import com.example.edecision.model.Entity.PropositionComplex;
+import com.example.edecision.model.Entity.PropositionSample;
 
 @Service
 public class PropositionService {
@@ -23,10 +23,11 @@ public class PropositionService {
 	@Autowired
 	private EquipeRepository equipeRepo;
 
-	public List<Object> listPropositions() {
-		List<Object> lesPropositions = this.propositionRepo.listPropositions();
+	public List<Proposition> listPropositions() {
+		List<Proposition> lesPropositions = this.propositionRepo.listPropositions();
 		return lesPropositions;
 	}
+	//Création de la proposition
 	public String createProposition(PropositionSample uneProposition)
     {
         //Verification que le ou les porteurs de la proposition existe
@@ -55,6 +56,8 @@ public class PropositionService {
 		}
         return this.propositionRepo.createProposition(uneProposition);
     }
+	
+	//Création de la proposition d'escalade
 	public String createPropositionEscaladeOuAmendement(PropositionComplex uneProposition)
     {
 		//Verification que le ou les porteurs de la proposition existe
@@ -84,6 +87,7 @@ public class PropositionService {
         return this.propositionRepo.createPropositionEscaladeOuAmendement(uneProposition);
     }
 	
+	//Suppression d'une proposition
 	public String retirerProposition(int id) {
 		String reponse = this.propositionRepo.retirerProposition(id);
 		return reponse;

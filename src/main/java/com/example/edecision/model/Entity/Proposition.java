@@ -1,4 +1,4 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
 
 import java.time.Instant;
 import java.util.Date;
@@ -13,21 +13,26 @@ public class Proposition {
     private String problematique;
 
     private String resolution;
+    //Champ pour savoir si la proposition bloque le projet
     private Boolean block_project;
 
+    //Date de la proposition : par défaut la valeur est la valeur actuelle
     private Date date_proposition = Date.from(Instant.now());
 
-    private Boolean accepted = false;
+    //Est ce que la proposition a été accepté par défaut à null
+    private Boolean accepted = null;
 
+    //Nbr de semainse durant laquelle la proposition peut etre débattu
     private int nbr_semaine_debat;
 
+    //Les id utilisateurs des porteurs de la proposition
     private List<Integer> lesPorteurs;
-
+    //Les id utilisateurs des soutiens de la proposition
     private List<Integer> lesSoutiens;
-
+    //Les id des équipes impactées par la proposition
     private List<Integer> lesImpactees;
 
-
+    //La proposition escaladé ou mandatée
     private Proposition proposal = null;
 
     public int getId() {

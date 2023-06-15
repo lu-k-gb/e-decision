@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.edecision.model.Entity.Projet;
+
 @Transactional
 @Repository
 public class ProjetRepository {
@@ -20,15 +22,17 @@ public class ProjetRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Object> listProjets()
+	//Récupération de la liste de projet par utilisation du micro service projet
+	public List<Projet> listProjets()
 	{
 		String uri = "http://127.0.0.1:8081/projets";
 		RestTemplate restTemplate = new RestTemplate();
-		Object[] lesProjets = restTemplate.getForObject(uri, Object[].class);
+		Projet[] lesProjets = restTemplate.getForObject(uri, Projet[].class);
 		return Arrays.asList(lesProjets);
 		
 	}
 	
+	//Ajout d'un projet
 	public String ajoutProjet(Projet unProjet)
 	{
 		String uri = "http://127.0.0.1:8081/projet";
@@ -38,6 +42,7 @@ public class ProjetRepository {
 		return resultat.getBody().toString();
 	}
 	
+	//Suppression d'un projet
 	public String deleteProjet(int id)
 	{
 		String uri = "http://127.0.0.1:8081/projet/";
@@ -47,6 +52,7 @@ public class ProjetRepository {
 		return resultat.getBody();
 	}
 	
+	//Mise à jour de l'état d'un projet
 	public String updateEtat(int id)
 	{
 		String uri = "http://127.0.0.1:8081/projet/setEtat/";
@@ -56,6 +62,7 @@ public class ProjetRepository {
 		return "Modification ok " + resultat.getBody().substring(21);
 	}
 	
+	//Récupération d'un projet en fonction de son id
 	public Projet getProjetById(int idProjet)
 	{
 		String uri = "http://127.0.0.1:8081/projet/";

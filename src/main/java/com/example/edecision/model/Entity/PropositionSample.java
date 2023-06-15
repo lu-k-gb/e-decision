@@ -1,9 +1,9 @@
-package com.example.edecision.model;
-
-import java.util.Date;
+package com.example.edecision.model.Entity;
 import java.util.List;
 
-public class PropositionComplex {
+//Meme champ qu'une proposition, cependant il n'y a pas de notion de proposition escaladée ou mandatée
+//(utilisé pour la création de proposition simple originelle)
+public class PropositionSample {
 	private int id;
 
     private String enonce;
@@ -12,7 +12,6 @@ public class PropositionComplex {
 
     private String resolution;
     private Boolean block_project;
-
 
     private int nbr_semaine_debat;
 
@@ -23,7 +22,6 @@ public class PropositionComplex {
     private List<Integer> lesImpactees;
 
 
-    private int proposal;
 
     public int getId() {
         return id;
@@ -83,12 +81,4 @@ public class PropositionComplex {
     public void setListeImpactees(List<Integer> lesImpactees) {
         this.lesImpactees = lesImpactees;
     }
-    public int getProposal() {
-        return proposal;
-    }
-
-    public void setProposal(int proposal) {
-        this.proposal = proposal;
-    }
-
 }

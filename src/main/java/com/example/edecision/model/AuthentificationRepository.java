@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.example.edecision.model.Entity.Authentification;
+
 
 @Transactional()
 @Repository
@@ -26,6 +28,7 @@ public class AuthentificationRepository {
 	
 	private PasswordEncoder passwordEncoder;
 	
+	//Récupération d'authentification de l'utilisateur en fonction de son login
 	public Authentification getUserByName(String name)
 	{
 		Authentification entity;
@@ -47,7 +50,6 @@ public class AuthentificationRepository {
 			Authentification entity = em.find(Authentification.class, uneAuthentification.getId());
 			if (entity != null) {
 				return new ResponseEntity<>("Authentification deja existante", HttpStatus.UNAUTHORIZED);
-				//return "Authentification deja existante";
 			}
 			else {
 				//On vérifie ensuite que le login n'est pas deja utilisé
@@ -56,7 +58,6 @@ public class AuthentificationRepository {
 			 if (entity != null)
 			 {
 				 return new ResponseEntity<>("Un utilisateur utilise deja ce login", HttpStatus.UNAUTHORIZED);
-				 //return ;
 			 }
 			 else
 			 {
@@ -81,7 +82,6 @@ public class AuthentificationRepository {
 					 }
 
 					return new ResponseEntity<>("Ajout de l'authentification réalisée " + dernierId , HttpStatus.CREATED);
-					//return  "Ajout de l'authentification réalisée";
 
 		    }
 			}
@@ -93,15 +93,13 @@ public class AuthentificationRepository {
 			Authentification entity = em.find(Authentification.class, numero);
 			if (entity == null) {
 				return new ResponseEntity<>("Numéro inconnu, veuillez réessayez"  , HttpStatus.NOT_FOUND);
-				//return "Numéro inconnu, veuillez réessayez";
 			}
 			em.remove(entity);
 			return new ResponseEntity<>("Suppression de l'authentification réalisée " + entity.getId() , HttpStatus.OK);
-			//return "Suppression réalisée";
 		}
 	        
 		
-		
+		// Méthode pour crypté le password
 		public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 			Assert.notNull(passwordEncoder, "passwordEncoder cannot be null");
 			this.passwordEncoder = passwordEncoder;

@@ -1,17 +1,20 @@
-package com.example.edecision.model;
-
-import java.util.List;
+package com.example.edecision.model.Entity;
 
 
-public class Equipe {
+//Meme champs que la classe Equipe mais sans les coéquipiers (utilisé pour la création d'une équipe)
+public class EquipeSimple{
+	
+	
 	private int id;
+	
 	private String name;
+	
 	private int id_manager;
+	
 	private int id_team_master;
+	
 	private int id_projet;
 	
-
-	private List<Integer> lesParticipants;
 	
 	public int getId() {
 		return id;
@@ -45,12 +48,6 @@ public class Equipe {
 	public void setIdProjet(int id_projet) {
 		this.id_projet = id_projet;
 	}
-	public List<Integer> getListeEquipier() {
-		return lesParticipants;
-	}
-
-	public void setListeEquipier(List<Integer> lesParticipants) {
-		this.lesParticipants = lesParticipants;
-	}
+	
 	
 }

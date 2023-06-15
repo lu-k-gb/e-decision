@@ -14,28 +14,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.edecision.model.AuthentUtilisateur;
-import com.example.edecision.model.Authentification;
-import com.example.edecision.model.Projet;
-import com.example.edecision.model.Utilisateur;
+import com.example.edecision.model.Entity.AuthentUtilisateur;
+import com.example.edecision.model.Entity.Authentification;
+import com.example.edecision.model.Entity.Projet;
+import com.example.edecision.model.Entity.Utilisateur;
 import com.example.edecision.service.JwtUserDetailsService;
 import com.example.edecision.service.ProjetService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+//Annotation qui permet de spécifier à swagger que l'on va passer le token que l'on aura saisi pour l'authent swagger
 @SecurityRequirement(name = "bearerAuth")
+//Toutes les routes de ce controller appellent le micro-service projet
 public class ProjetController {
 	
 	@Autowired
 	private ProjetService projetService;
 	
+	//Récupération de tous les projets
 	@GetMapping(value = "/projets")
-	public List<Object> getProjets() {
-		List<Object> lesProjets = projetService.listProjets(); 
+	public List<Projet> getProjets() {
+		List<Projet> lesProjets = projetService.listProjets(); 
 		return lesProjets;
 	}
 	
+	//Ajout d'un projet
 	@PostMapping("projet/add")
 	public String ajoutProjet(@RequestBody Projet unprojet)
 	{
@@ -44,6 +48,7 @@ public class ProjetController {
 		return result;
 	}
 	
+	//Suppression d'un projet
 	@DeleteMapping("projet/delete/{id}")
 	public String delete(@PathVariable("id") int id)
 	{

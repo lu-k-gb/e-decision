@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.edecision.model.*;
+import com.example.edecision.model.Entity.Projet;
 
 @Service
 public class ProjetService {
@@ -13,21 +14,23 @@ public class ProjetService {
 	@Autowired
 	private ProjetRepository projetRepo;
 	
-	public List<Object> listProjets() {
-		List<Object> lesProjets = this.projetRepo.listProjets();
+	//Récupération de la liste des projets
+	public List<Projet> listProjets() {
+		List<Projet> lesProjets = this.projetRepo.listProjets();
 		return lesProjets;
 	}
-	
+	//Création d'un projet
 	public String ajoutProjet(Projet unProjet) {
 		String reponse = this.projetRepo.ajoutProjet(unProjet);
 		return reponse;
 	}
-	
+	//Suppression d'un projet
 	public String deleteProjet(int id) {
 		String reponse = this.projetRepo.deleteProjet(id);
 		return reponse;
 	}
 	
+	//Mise à jour de l'état d'un projet
 	public String updateEtat(int id) {
 		String reponse = this.projetRepo.updateEtat(id);
 		return reponse;

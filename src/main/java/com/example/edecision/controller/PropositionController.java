@@ -12,23 +12,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.edecision.model.Proposition;
-import com.example.edecision.model.PropositionComplex;
-import com.example.edecision.model.PropositionSample;
+import com.example.edecision.model.Entity.Proposition;
+import com.example.edecision.model.Entity.PropositionComplex;
+import com.example.edecision.model.Entity.PropositionSample;
 import com.example.edecision.service.PropositionService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+//Annotation qui permet de spécifier à swagger que l'on va passer le token que l'on aura saisi pour l'authent swagger
 @SecurityRequirement(name = "bearerAuth")
+//Toutes les routes de ce controller appellent le micro-service proposition
 public class PropositionController {
 	
 	@Autowired
 	private PropositionService service;
 
+	//Récupération de toutes les propositions
 	@GetMapping(value = "/propositions")
-	public List<Object> getPropositions() {
-		List<Object> lesPropositions = service.listPropositions(); 
+	public List<Proposition> getPropositions() {
+		List<Proposition> lesPropositions = service.listPropositions(); 
 		return lesPropositions;
 	}
 	//Création d'une propositionSimple

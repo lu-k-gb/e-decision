@@ -15,6 +15,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.edecision.model.Entity.Proposition;
+import com.example.edecision.model.Entity.PropositionComplex;
+import com.example.edecision.model.Entity.PropositionSample;
+
 @Transactional
 @Repository
 public class PropositionRepository {
@@ -22,14 +26,16 @@ public class PropositionRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Object> listPropositions()
+	//Récupération de toutes les propositions par utilisation du micro service proposition
+	public List<Proposition> listPropositions()
 	{
 		String uri = "http://127.0.0.1:8082/propositions";
 		RestTemplate restTemplate = new RestTemplate();
-		Object[] lesPropositions = restTemplate.getForObject(uri, Object[].class);
+		Proposition[] lesPropositions = restTemplate.getForObject(uri, Proposition[].class);
 		return Arrays.asList(lesPropositions);
 		
 	}
+	//Création d'une proposition simple (originelle)
 	public String createProposition(PropositionSample uneProposition)
     {
         String uri = "http://127.0.0.1:8082/proposition";
@@ -40,6 +46,7 @@ public class PropositionRepository {
             System.out.print(response.getStatusCode());
             return response;
 		}).build();
+        //Transformation de la proposition simple en une proposition normale
         Proposition laProposition = new Proposition();
         laProposition.setEnonce(uneProposition.getEnonce());
         laProposition.setBlockProject(uneProposition.getBlockProject());
@@ -51,11 +58,11 @@ public class PropositionRepository {
         laProposition.setResolution(uneProposition.getResolution());
     ResponseEntity<String> resultat = restTemplate
     .postForEntity(uri , laProposition, String.class);
-//        Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
         return resultat.getBody().toString();
 
     }
 	
+	//Création d'une proposition d'escalade
 	public String createPropositionEscaladeOuAmendement(PropositionComplex uneProposition)
     {
         String uri = "http://127.0.0.1:8082/proposition";
@@ -66,6 +73,7 @@ public class PropositionRepository {
             System.out.print(response.getStatusCode());
             return response;
 		}).build();
+        //On transforme la proposition d'escalade (complexe) en une proposition normale
         Proposition laProposition = new Proposition();
         laProposition.setEnonce(uneProposition.getEnonce());
         laProposition.setBlockProject(uneProposition.getBlockProject());
@@ -75,6 +83,7 @@ public class PropositionRepository {
         laProposition.setNbrSemaineDebat(uneProposition.getNbrSemaineDebat());
         laProposition.setProblematique(uneProposition.getProblematique());
         laProposition.setResolution(uneProposition.getResolution());
+        //On verifie cependant que la proposition que l'on tente d'escaladée existe
         Proposition propositionImpactee = getPropositionById(uneProposition.getProposal());
         if (propositionImpactee == null)
         {
@@ -83,11 +92,11 @@ public class PropositionRepository {
         laProposition.setProposal(propositionImpactee);
     ResponseEntity<String> resultat = restTemplate
     .postForEntity(uri , laProposition, String.class);
-//        Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
         return resultat.getBody().toString();
 
     }
 	
+	//On récupére la proposition par rapport à son id
 	public Proposition getPropositionById(int idProposition)
 	{
 		String uri = "http://127.0.0.1:8082/proposition/";
@@ -103,6 +112,7 @@ public class PropositionRepository {
 		
 	}
 	
+	//Suppression (retirage) d'une proposition
 	public String retirerProposition(int id)
 	{
 		String uri = "http://127.0.0.1:8082/proposition/";

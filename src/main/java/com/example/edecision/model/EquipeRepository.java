@@ -17,6 +17,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.edecision.model.Entity.Equipe;
+import com.example.edecision.model.Entity.EquipeSimple;
+
 @Transactional
 @Repository
 public class EquipeRepository {
@@ -24,39 +27,37 @@ public class EquipeRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public List<Object> listEquipes()
+	//Récupération de la liste des équipes via l'appel au microservice équipe
+	public List<Equipe> listEquipes()
 	{
 		String uri = "http://127.0.0.1:8083/equipes";
 		RestTemplate restTemplate = new RestTemplate();
-		Object[] lesEquipes = restTemplate.getForObject(uri, Object[].class);
+		Equipe[] lesEquipes = restTemplate.getForObject(uri, Equipe[].class);
 		return Arrays.asList(lesEquipes);
 		
 	}
-	
+	//Création d'une équipe via l'utilisation du microservice equipe (On lui passe une equipe sans membre car à la création le seul membre est le team master)
 	public String createEquipe(EquipeSimple uneEquipe)
 	{
 		String uri = "http://127.0.0.1:8083/equipe";
 		RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<String> resultat = restTemplate
 	.postForEntity(uri , uneEquipe, String.class);
-//		Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
 		return resultat.getBody().toString();
 		
 	}
 	
+	//Suppression d'une équipe via l'utilisation du microservice équipe
 	public String delete(int id)
 	{
 		String uri = "http://127.0.0.1:8083/equipe/";
 		RestTemplate restTemplate = new RestTemplate();
 	String test = "";
 	ResponseEntity<String> resultat = restTemplate.exchange(uri + id, HttpMethod.DELETE,new HttpEntity<String>(test ), String.class);
-	 //restTemplate
-	//.delete();
-//		Object[] lesUtilisateurs = restTemplate.getForObject(uri, Object[].class);
-		return "Suppression de l'équipe effectué ";
-		
+		return "Suppression de l'équipe effectuée";
 	}
 	
+	//Ajout des coéquipiers via l'utilisation du microservice equipe
 	public String addEquipier(int id, List<Integer> lesCoequipiers)
 	{
 		String uri = "http://127.0.0.1:8083/equipe/";
@@ -75,9 +76,12 @@ public class EquipeRepository {
 		
 	}
 	
+	//Récupération d'une équipe en fonction de son id à l'aide du microservice equipe
 	public Equipe getEquipeById(int idEquipe)
 	{
 		String uri = "http://127.0.0.1:8083/equipe/";
+		//Ce RestTemplate a pour vocation l'aide au debug des appels au microservice.
+		//Il aurait du être utilisé dans tous les appels mais par manque de temps, ce n'est pas possible.
 		RestTemplate restTemplate = new RestTemplateBuilder().interceptors((request, body, execution) -> {
             System.out.print(request.getURI());
             System.out.print(body);
