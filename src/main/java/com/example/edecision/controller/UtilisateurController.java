@@ -57,7 +57,7 @@ public class UtilisateurController {
 			//à partir de son id authentification
 			int idUtilisateur = utilisateursService.getIdUtilisateurByIdAuthent(Integer.parseInt(resultat));
 			//Une fois cet id récupéré on supprime l'utilisateur
-			String test = utilisateursService.deleteUtilisateur(idUtilisateur);
+			ResponseEntity<String> test = utilisateursService.deleteUtilisateur(idUtilisateur);
 		}
 		return result;
 	}

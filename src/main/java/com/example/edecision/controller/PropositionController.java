@@ -3,6 +3,7 @@ package com.example.edecision.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,23 +37,23 @@ public class PropositionController {
 	}
 	//Création d'une propositionSimple
     @PostMapping("proposition")
-    public String ajoutProposition(@RequestBody PropositionSample uneProposition)
+    public ResponseEntity<String> ajoutProposition(@RequestBody PropositionSample uneProposition)
     {
-        String result = service.createProposition(uneProposition);
+    	ResponseEntity<String> result = service.createProposition(uneProposition);
         return result;
     }
   //Création d'une propositionComplex
     @PostMapping("proposition/complexe")
-    public String ajoutPropositionEscaladeOuAmendement(@RequestBody PropositionComplex uneProposition)
+    public ResponseEntity<String> ajoutPropositionEscaladeOuAmendement(@RequestBody PropositionComplex uneProposition)
     {
-        String result = service.createPropositionEscaladeOuAmendement(uneProposition);
+    	ResponseEntity<String> result = service.createPropositionEscaladeOuAmendement(uneProposition);
         return result;
     }
     //Retirer une proposition
     @DeleteMapping("proposition/retirer/{id}")
-	public String retirerProposition(@PathVariable("id") int id)
+	public ResponseEntity<String> retirerProposition(@PathVariable("id") int id)
 	{
-		String result;
+    	ResponseEntity<String> result;
 		result = service.retirerProposition(id);
 		return result;
 	}

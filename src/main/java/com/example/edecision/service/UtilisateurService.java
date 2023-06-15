@@ -3,6 +3,7 @@ package com.example.edecision.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.edecision.model.UtilisateurRepository;
@@ -20,13 +21,13 @@ public class UtilisateurService {
 		return lesUtilisateurs;
 	}
 	
-	public String ajoutUtilisateur(Utilisateur unUtilisateur) {
-		String reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
+	public ResponseEntity<String> ajoutUtilisateur(Utilisateur unUtilisateur) {
+		ResponseEntity<String> reponse = this.UtilisateurRepo.ajoutUtilisateur(unUtilisateur);
 		return reponse;
 	}
 	
-	public String deleteUtilisateur(int id) {
-		String reponse = this.UtilisateurRepo.deleteUtilisateur(id);
+	public ResponseEntity<String> deleteUtilisateur(int id) {
+		ResponseEntity<String> reponse = this.UtilisateurRepo.deleteUtilisateur(id);
 		return reponse;
 	}
 	

@@ -3,6 +3,7 @@ package com.example.edecision.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,25 +39,25 @@ public class EquipeController {
 	
 	//Création d'une équipe
 			@PostMapping("equipe")
-			public String ajoutEquipe(@RequestBody EquipeSimple uneEquipe)
+			public ResponseEntity<String> ajoutEquipe(@RequestBody EquipeSimple uneEquipe)
 			{
-				String result = service.createEquipe(uneEquipe);
+				ResponseEntity<String> result = service.createEquipe(uneEquipe);
 				return result;
 			}
 			
 			//Suppression d'une équipe
 			@DeleteMapping("equipe/{id}")
-			public String delete(@PathVariable("id") int id)
+			public ResponseEntity<String> delete(@PathVariable("id") int id)
 			{
-				String result = service.delete(id);
+				ResponseEntity<String> result = service.delete(id);
 				return result;
 			}
 			
 			//Ajout des équipiers à l'équipe
 			@PutMapping("equipe/{id}")
-			public String addEquipier(@PathVariable("id") int id , @RequestBody List<Integer> lesCoequipiers)
+			public ResponseEntity<String> addEquipier(@PathVariable("id") int id , @RequestBody List<Integer> lesCoequipiers)
 			{
-				String result = service.addEquipier(id, lesCoequipiers);
+				ResponseEntity<String> result = service.addEquipier(id, lesCoequipiers);
 				return result;
 			}
 

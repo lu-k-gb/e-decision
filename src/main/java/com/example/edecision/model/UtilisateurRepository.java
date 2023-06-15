@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,24 +34,25 @@ public class UtilisateurRepository {
 	}
 	
 	//Ajout d'un utilisateur
-	public String ajoutUtilisateur(Utilisateur unUtilisateur)
+	public ResponseEntity<String> ajoutUtilisateur(Utilisateur unUtilisateur)
 	{
 		String uri = "http://127.0.0.1:8085/utilisateur";
 		RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<String> resultat = restTemplate
 	.postForEntity(uri , unUtilisateur, String.class);
-		return resultat.getBody().toString();
+		return resultat;
 		
 	}
 	
 	//Suppression d'un utilisateur
-	public String deleteUtilisateur(int id)
+	public ResponseEntity<String> deleteUtilisateur(int id)
 	{
 		String uri = "http://127.0.0.1:8085/utilisateur/";
 		RestTemplate restTemplate = new RestTemplate();
 	String test = "";
 	ResponseEntity<String> resultat = restTemplate.exchange(uri + id, HttpMethod.DELETE,new HttpEntity<String>(test ), String.class);
-		return "Suppression ok " + resultat.getBody().substring(21);
+	return new ResponseEntity<>("Suppression ok " + resultat.getBody().substring(21)+"", HttpStatus.BAD_REQUEST);
+		//return "Suppression ok " + resultat.getBody().substring(21);
 		
 	}
 	

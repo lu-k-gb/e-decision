@@ -10,6 +10,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
@@ -37,28 +38,39 @@ public class EquipeRepository {
 		
 	}
 	//Création d'une équipe via l'utilisation du microservice equipe (On lui passe une equipe sans membre car à la création le seul membre est le team master)
-	public String createEquipe(EquipeSimple uneEquipe)
+	public ResponseEntity<String> createEquipe(EquipeSimple uneEquipe)
 	{
 		String uri = "http://127.0.0.1:8083/equipe";
 		RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<String> resultat = restTemplate
 	.postForEntity(uri , uneEquipe, String.class);
-		return resultat.getBody().toString();
+	if (resultat.getStatusCodeValue() != 200)
+	{
+		return new ResponseEntity<>("Erreur lors de la création de l'équipe", HttpStatus.BAD_REQUEST);
+		//return "Erreur lors de la création de l'équipe";
+	}
+		return resultat;
 		
 	}
 	
 	//Suppression d'une équipe via l'utilisation du microservice équipe
-	public String delete(int id)
+	public ResponseEntity<String> delete(int id)
 	{
 		String uri = "http://127.0.0.1:8083/equipe/";
 		RestTemplate restTemplate = new RestTemplate();
 	String test = "";
 	ResponseEntity<String> resultat = restTemplate.exchange(uri + id, HttpMethod.DELETE,new HttpEntity<String>(test ), String.class);
-		return "Suppression de l'équipe effectuée";
+		if (resultat.getStatusCodeValue() != 200)
+		{
+			return new ResponseEntity<>("Erreur lors de la suppression de l'équipe", HttpStatus.BAD_REQUEST);
+			//return "Erreur lors de la suppression";
+		}
+		return resultat;
+		//return "Suppression de l'équipe effectuée";
 	}
 	
 	//Ajout des coéquipiers via l'utilisation du microservice equipe
-	public String addEquipier(int id, List<Integer> lesCoequipiers)
+	public ResponseEntity<String> addEquipier(int id, List<Integer> lesCoequipiers)
 	{
 		String uri = "http://127.0.0.1:8083/equipe/";
 		RestTemplate restTemplate = new RestTemplateBuilder().interceptors((request, body, execution) -> {
@@ -72,7 +84,13 @@ public class EquipeRepository {
 	      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity<List<Integer>> requestEntity = new HttpEntity<List<Integer>>(lesCoequipiers, headers);
 		ResponseEntity<String> resultat = restTemplate.exchange(uri + id, HttpMethod.PUT,requestEntity, String.class);
-		return "Ajout des équipiers ok ";
+		if (resultat.getStatusCodeValue() != 200)
+		{
+			return new ResponseEntity<>("Erreur lors de l'ajout des coéquipiers", HttpStatus.BAD_REQUEST);
+			//return "Erreur lors d'ajout des coéquipiers";
+		}
+		return resultat;
+		//return "Ajout des équipiers ok ";
 		
 	}
 	

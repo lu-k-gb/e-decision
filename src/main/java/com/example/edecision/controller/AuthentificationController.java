@@ -59,7 +59,7 @@ public class AuthentificationController {
 		public ResponseEntity<String> ajoutAuthentification(@RequestBody AuthentUtilisateur unUtilisateurComplet)
 		{
 			ResponseEntity<String> result;
-			String test;
+			ResponseEntity<String> test;
 			//On crée un objet authentification à partir de l'objet contenant tous les champs
 			Authentification uneAuthentification = new Authentification();
 			uneAuthentification.setName(unUtilisateurComplet.getName());

@@ -41,18 +41,18 @@ public class ProjetController {
 	
 	//Ajout d'un projet
 	@PostMapping("projet/add")
-	public String ajoutProjet(@RequestBody Projet unprojet)
+	public ResponseEntity<String> ajoutProjet(@RequestBody Projet unprojet)
 	{
-		String result;
+		ResponseEntity<String> result;
 		result = projetService.ajoutProjet(unprojet);
 		return result;
 	}
 	
 	//Suppression d'un projet
 	@DeleteMapping("projet/delete/{id}")
-	public String delete(@PathVariable("id") int id)
+	public ResponseEntity<String> delete(@PathVariable("id") int id)
 	{
-		String result;
+		ResponseEntity<String> result;
 		result = projetService.deleteProjet(id);
 		return result;
 	}
