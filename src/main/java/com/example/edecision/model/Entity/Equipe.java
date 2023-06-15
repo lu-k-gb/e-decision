@@ -1,18 +1,20 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
 
-public class EquipeSimple{
-	
-	
+import java.util.List;
+
+
+public class Equipe {
 	private int id;
-	
 	private String name;
-	
+	//Id utilisateur du manageur de l'équipe
 	private int id_manager;
-	
+	//Id utilisateurs du chef de l'équipe
 	private int id_team_master;
-	
+	//Id du projet auquel l'équipe est rattaché
 	private int id_projet;
 	
+	//Les équipiers de cette équipe
+	private List<Integer> lesParticipants;
 	
 	public int getId() {
 		return id;
@@ -46,6 +48,12 @@ public class EquipeSimple{
 	public void setIdProjet(int id_projet) {
 		this.id_projet = id_projet;
 	}
-	
+	public List<Integer> getListeEquipier() {
+		return lesParticipants;
+	}
+
+	public void setListeEquipier(List<Integer> lesParticipants) {
+		this.lesParticipants = lesParticipants;
+	}
 	
 }

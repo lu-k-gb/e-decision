@@ -17,6 +17,9 @@ public class VoteRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
+	
+	
+	////********** EN COURS DE REALISATION *******
 	public List<Object> listVotes()
 	{
 		String uri = "http://127.0.0.1:8084/votes";

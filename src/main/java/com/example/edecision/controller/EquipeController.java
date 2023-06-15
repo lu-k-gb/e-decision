@@ -3,6 +3,7 @@ package com.example.edecision.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,45 +15,49 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.edecision.model.EquipeSimple;
+import com.example.edecision.model.Entity.Equipe;
+import com.example.edecision.model.Entity.EquipeSimple;
 import com.example.edecision.service.EquipeService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+// Annotation qui permet de spécifier à swagger que l'on va passer le token que l'on aura saisi pour l'authent swagger
 @SecurityRequirement(name = "bearerAuth")
+//Toutes les routes de ce controller appellent le micro-service équipe
 public class EquipeController {
 	
 	@Autowired
 	private EquipeService service;
 
+	//Récupération de toutes les équipes (appel au micro-service équipe)
 	@GetMapping(value = "/equipes")
-	public List<Object> getEquipes() {
-		List<Object> lesEquipes = service.listEquipes(); 
+	public List<Equipe> getEquipes() {
+		List<Equipe> lesEquipes = service.listEquipes(); 
 		return lesEquipes;
 	}
 	
 	//Création d'une équipe
 			@PostMapping("equipe")
-			public String ajoutEquipe(@RequestBody EquipeSimple uneEquipe)
+			public ResponseEntity<String> ajoutEquipe(@RequestBody EquipeSimple uneEquipe)
 			{
-				String result = service.createEquipe(uneEquipe);
+				ResponseEntity<String> result = service.createEquipe(uneEquipe);
 				return result;
 			}
 			
 			//Suppression d'une équipe
-			@DeleteMapping("equipe/{numero}")
-			public String delete(@PathVariable("id") int id)
+			@DeleteMapping("equipe/{id}")
+			public ResponseEntity<String> delete(@PathVariable("id") int id)
 			{
-				String result = service.delete(id);
+				ResponseEntity<String> result = service.delete(id);
 				return result;
 			}
 			
-			//Nouvelle requete de modification d'un attribut d'une equipe en utilisant des request param et en retournant une chaine de caractère
+			//Ajout des équipiers à l'équipe
 			@PutMapping("equipe/{id}")
-			public String addEquipier(@PathVariable("id") int id , @RequestBody List<Integer> lesCoequipiers)
+			public ResponseEntity<String> addEquipier(@PathVariable("id") int id , @RequestBody List<Integer> lesCoequipiers)
 			{
-				String result = service.addEquipier(id, lesCoequipiers);
+				ResponseEntity<String> result = service.addEquipier(id, lesCoequipiers);
 				return result;
 			}
 

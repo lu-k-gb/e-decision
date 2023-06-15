@@ -1,4 +1,4 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
 
 
 

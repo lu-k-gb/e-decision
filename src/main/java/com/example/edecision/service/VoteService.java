@@ -13,6 +13,8 @@ public class VoteService {
 	@Autowired
 	private VoteRepository VoteRepo;
 	
+	
+	// *********** EN COURS *********
 	public List<Object> listVotes() {
 		List<Object> lesVotes = this.VoteRepo.listVotes();
 		return lesVotes;

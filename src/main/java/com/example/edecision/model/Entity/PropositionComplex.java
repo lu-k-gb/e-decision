@@ -1,7 +1,10 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
+
 import java.util.List;
 
-public class PropositionSample {
+//Meme champs que pour une proposition cependant, on spécifie un numéro de proposition au lieu
+//d'une proposition directement (utilisé pour la création d'un amendement ou d'une escalade)
+public class PropositionComplex {
 	private int id;
 
     private String enonce;
@@ -10,6 +13,7 @@ public class PropositionSample {
 
     private String resolution;
     private Boolean block_project;
+
 
     private int nbr_semaine_debat;
 
@@ -20,6 +24,7 @@ public class PropositionSample {
     private List<Integer> lesImpactees;
 
 
+    private int proposal;
 
     public int getId() {
         return id;
@@ -79,4 +84,12 @@ public class PropositionSample {
     public void setListeImpactees(List<Integer> lesImpactees) {
         this.lesImpactees = lesImpactees;
     }
+    public int getProposal() {
+        return proposal;
+    }
+
+    public void setProposal(int proposal) {
+        this.proposal = proposal;
+    }
+
 }

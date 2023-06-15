@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.edecision.model.Authentification;
 import com.example.edecision.model.AuthentificationRepository;
+import com.example.edecision.model.Entity.Authentification;
 
 
 
@@ -27,9 +27,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 		 {
 		 return new User(user.getName(), user.getPassword(), new ArrayList<>());
 		 }
-//		if ("Lucaxel".equals(username)) {
-//			return new User("Lucaxel", "$2a$10$dtm6KfKQoHdgG4bXnY4qquK1CIwY1J0egW7Gho1ZP0W7204j5HAgC",
-//					new ArrayList<>()); }
 		 else {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}

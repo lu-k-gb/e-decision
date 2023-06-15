@@ -1,4 +1,4 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
 
 import java.io.Serializable;
 
@@ -20,11 +20,6 @@ public class Authentification implements Serializable {
 	private String name;
 	@Column
 	private String password;
-	
-//	public Utilisateur(String name, String password) {
-//		this.setName(name);
-//		this.setPassword(password);
-//	}
 
 	
 	public int getId() {

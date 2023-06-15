@@ -1,4 +1,4 @@
-package com.example.edecision.model;
+package com.example.edecision.model.Entity;
 
 
 
@@ -11,6 +11,7 @@ public class Utilisateur {
 	
 	private String adresse_mail;
 	
+	//Id correspondant au pseudo + mdp de l'utilisateur
 	private int id_authentification;
 	
 	public int getId() {

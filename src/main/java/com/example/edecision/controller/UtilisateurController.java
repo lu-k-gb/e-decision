@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.edecision.model.AuthentUtilisateur;
-import com.example.edecision.model.Authentification;
-import com.example.edecision.model.Utilisateur;
+import com.example.edecision.model.Entity.AuthentUtilisateur;
+import com.example.edecision.model.Entity.Authentification;
+import com.example.edecision.model.Entity.Utilisateur;
 import com.example.edecision.service.EquipeService;
 import com.example.edecision.service.JwtUserDetailsService;
 import com.example.edecision.service.UtilisateurService;
@@ -24,7 +24,9 @@ import com.example.edecision.service.UtilisateurService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
+//Annotation qui permet de spécifier à swagger que l'on va passer le token que l'on aura saisi pour l'authent swagger
 @SecurityRequirement(name = "bearerAuth")
+//Toutes les routes de ce controller appellent le micro-service utilisateurs
 public class UtilisateurController {
 	
 	@Autowired
@@ -32,31 +34,30 @@ public class UtilisateurController {
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
 
+	//Récupération de tous les utilisateurs
 	@GetMapping(value = "/utilisateurs")
-	public List<Object> getUtilisateurs() {
-		List<Object> lesUtilisateurs = utilisateursService.listUtilisateurs(); 
+	public List<Utilisateur> getUtilisateurs() {
+		List<Utilisateur> lesUtilisateurs = utilisateursService.listUtilisateurs(); 
 		return lesUtilisateurs;
 	}
 	
 	
-	
 	//Suppression d'un utilisateur + authentification
-	@DeleteMapping("user/delete/{numero}")
-	public ResponseEntity<String> delete(@PathVariable("numero") int numero)
+	@DeleteMapping("user/delete/{id}")
+	public ResponseEntity<String> delete(@PathVariable("id") int id)
 	{
 		ResponseEntity<String> result;
 		//Appel de la suppression de l'authentification
-	    result = userDetailsService.deleteAuthentification(numero);
+	    result = userDetailsService.deleteAuthentification(id);
 	    if (result.getStatusCode() == HttpStatus.OK)
 		{
 	    	//Si authent supprimé alors on récupère l'id qui a été supprimé
-			String resultat = result.getBody().substring(43);
-			//unutilisateur.setIdAuthentification(Integer.parseInt(resultat));
-			//On appel la méthode du micro service utilisateur permettant de récupérant l'id utilisateur
+			String resultat = result.getBody().substring(43);;
+			//On appel la méthode du micro service utilisateur permettant de récupérer l'id utilisateur
 			//à partir de son id authentification
-			int idUtilisateur = utilisateursService.getIdUtilisateurByNumeroAuthent(Integer.parseInt(resultat));
+			int idUtilisateur = utilisateursService.getIdUtilisateurByIdAuthent(Integer.parseInt(resultat));
 			//Une fois cet id récupéré on supprime l'utilisateur
-			String test = utilisateursService.deleteUtilisateur(idUtilisateur);
+			ResponseEntity<String> test = utilisateursService.deleteUtilisateur(idUtilisateur);
 		}
 		return result;
 	}

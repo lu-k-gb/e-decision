@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.edecision.config.JwtTokenUtil;
 import com.example.edecision.model.JwtResponse;
-import com.example.edecision.model.Utilisateur;
-import com.example.edecision.model.AuthentUtilisateur;
-import com.example.edecision.model.Authentification;
+import com.example.edecision.model.Entity.AuthentUtilisateur;
+import com.example.edecision.model.Entity.Authentification;
+import com.example.edecision.model.Entity.Utilisateur;
 import com.example.edecision.service.JwtUserDetailsService;
 import com.example.edecision.service.UtilisateurService;
 
@@ -40,6 +40,7 @@ public class AuthentificationController {
 	private JwtUserDetailsService userDetailsService;
 	
 
+	//Requete permettant de s'authentifier et de récupérer un token
 	@PostMapping(value = "/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody Authentification authenticationRequest) throws Exception {
 
@@ -53,12 +54,12 @@ public class AuthentificationController {
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
-	//Création d'un compte authentification
+	//Création d'un compte authentification + utilisateur (appel au microservice utilisateur)
 		@PostMapping("register")
 		public ResponseEntity<String> ajoutAuthentification(@RequestBody AuthentUtilisateur unUtilisateurComplet)
 		{
 			ResponseEntity<String> result;
-			String test;
+			ResponseEntity<String> test;
 			//On crée un objet authentification à partir de l'objet contenant tous les champs
 			Authentification uneAuthentification = new Authentification();
 			uneAuthentification.setName(unUtilisateurComplet.getName());
@@ -75,8 +76,8 @@ public class AuthentificationController {
 			if (result.getStatusCode() == HttpStatus.CREATED)
 			{
 				//On recupère le code de l'authenfication que l'on vient de créer
-				//(voir pour modifier le code pour rendre plus dynamique)
 				String resultat = result.getBody().substring(37);
+				//On l'ajoute ensuite à l'objet utilisateur
 				unutilisateur.setIdAuthentification(Integer.parseInt(resultat));
 				//On lance la création d'un utilisateur
 				test = utilisateursService.ajoutUtilisateur(unutilisateur);
@@ -85,7 +86,7 @@ public class AuthentificationController {
 		}
 	
 	
-
+		//Méthode appelée pour vérifier l'authentification
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
